@@ -774,7 +774,7 @@ Thing<public>:rational = 1/3
 Thing<public>:rational = 10/3
 
 # - Make the type more specific (subtype)
-Thing<public>:int = 20  # nat is a subtype of int
+Thing<public>:int = 20  # int is a subtype of rational
 
 # Invalid updates (would be rejected):
 # - Remove the member
@@ -1028,7 +1028,7 @@ Notice how `Health` and `TakeDamage` are qualified with `/YourPackage/player_cla
 
 **Module member qualification**: Definitions within modules are qualified with the module path:
 
-<!--MoCompile-->
+<!--NoCompile-->
 ```verse
 # What you write:
 Config := module:
@@ -1038,10 +1038,10 @@ Config := module:
 
 # How the compiler sees it:
 (/YourPackage:)Config := module:
-    (/YourPackage/config:)MaxPlayers<public>:(/Verse.org/Verse:)int = 100
+    (/YourPackage/Config:)MaxPlayers<public>:(/Verse.org/Verse:)int = 100
 
-    (/YourPackage/config:)GetPlayerLimit<public>():(/Verse.org/Verse:)int =
-        (/YourPackage/config:)MaxPlayers
+    (/YourPackage/Config:)GetPlayerLimit<public>():(/Verse.org/Verse:)int =
+        (/YourPackage/Config:)MaxPlayers
 ```
 
 All built-in types are qualified with their standard library
@@ -1565,8 +1565,8 @@ using { /GameB/Combat }
 Damage := CalculateDamage(10.0)  # Error: which CalculateDamage?
 
 # Explicit
-DamageA := /GameA/Combat.CalculateDamage(10.0)  # Clear
-DamageB := /GameB/Combat.CalculateDamage(10.0)  # Clear
+DamageA := (/GameA/Combat:)CalculateDamage(10.0)  # Clear
+DamageB := (/GameB/Combat:)CalculateDamage(10.0)  # Clear
 ```
 
 ### Persistence Issues
